@@ -1,0 +1,163 @@
+*************** Beginning of data *****************
+0001.00 H                                                  
+0002.00 Fusr01d    CF   E             workstn              
+0003.00 fusr_disa  Uf A E           k disk                 
+0004.00  *                                                 
+0005.00 D                                                  
+0006.00  *-----------------------------------------------  
+0007.00  * Main routine                                    
+0008.00  *-----------------------------------------------  
+0009.00  /free                                             
+0010.00     //-------------------------------------------  
+0011.00     //  Display fisrt screen untill F3 is pressed  
+0012.00     //-------------------------------------------  
+0013.00     DoW *In03 = *Off;                              
+0013.02        Exfmt mmnu;                                 
+0013.03        clear mnuerrmsg;                            
+0013.04        if *In12 = *on;                             
+0013.05          leave;                                    
+0013.06        else;                                       
+0014.01          select ;                                  
+0014.02            when opt01 = 1;                              
+0014.05            ExSr $inq_proc;                              
+0014.06            when opt01 = 2;                              
+0014.07            ExSr $upd_proc;                              
+0014.08            when opt01 =3;                               
+0014.09            ExSr $add_proc;                              
+0014.10            other;                                       
+0014.11              mnuerrmsg='Invalid option !';              
+0014.12          endsl;                                         
+0014.13        endif;                                           
+0014.14      //Exfmt mmnu;                                      
+0015.00     EndDo;                                              
+0016.00     *Inlr = *On;                                        
+0017.00  /End-free                                              
+0018.00  /free                                                  
+0018.01  *-----------------------------------------------       
+0018.02  *   Search for specific user                           
+0018.03  *-----------------------------------------------       
+0018.04     BegSr $inq_proc;                                    
+0018.05     DoW *in03= *off;                                    
+0018.06        exfmt inqwin;                                
+0018.07        clear inqerrmsg ;                            
+0018.08        clear usr_idq ;                              
+0018.09        clear usr_namq;                              
+0018.10        clear disable_dq;                            
+0018.11        clear enable_dtq;                            
+0018.12        If *In12 = *on;                              
+0018.13          Leave;                                     
+0018.14        Else;                                        
+0018.15           Chain fld002  usr_disa;                   
+0018.16           If %Found(usr_disa);                      
+0018.17           usr_idq    = usr_id;                      
+0018.18           usr_namq   = usr_nam;                     
+0018.19           disable_dq = disable_dt;                  
+0018.20           enable_dtq = enable_dt;                   
+0018.21           else;                                     
+0018.22           inqerrmsg = 'Not Found !!';               
+0018.23           endif;                                    
+0018.24        endif;                                       
+0018.25     EndDo;                                          
+0018.26     EndSr;                                                
+0019.00  /end-free                                                
+0020.00  /free                                                    
+0020.01  *-----------------------------------------------         
+0020.02  *  Add new disable user if doesn't exists                
+0020.03  *-----------------------------------------------         
+0020.04   BegSr $add_proc;                                        
+0020.06     DoW *In03= *Off;                                      
+0020.07        exfmt addwin;                                      
+0020.08        clear adderrmsg ;                                  
+0020.13         If *In12 = *on;                                   
+0020.14        clear usr_ida;                                     
+0020.15        clear usr_nama;                                    
+0020.16        clear disable_da;                                  
+0020.17        clear enable_dta;                                  
+0020.18          Leave;                                           
+0020.19         Elseif *In05 = *On;                               
+0020.20             //Clear all fields                            
+0020.21        clear usr_ida;                                     
+0020.22        clear usr_nama;                                    
+0020.23        clear disable_da;                                               
+0020.24        clear enable_dta;                                               
+0020.25         endif;                                                         
+0020.26           Chain usr_ida  usr_disa;                                     
+0020.27             If %Found(usr_disa);                                       
+0020.28                adderrmsg = 'The user already exists';                  
+0020.29             elseif  (usr_ida =' ') or (usr_nama =' ')                  
+0020.30             or (disable_da =' ') or (enable_dta=' ');                  
+0020.31             adderrmsg = 'Plz fill all fields';                         
+0020.32            else;                                                       
+0020.33             adderrmsg = 'Press F6 to Add';                             
+0020.34            if (*In06 = *on);                                           
+0020.35             //Create                                                   
+0020.36             usr_id     = usr_ida;                                      
+0020.37             usr_nam    = usr_nama;                                     
+0020.38             disable_dt = disable_da;                                   
+0020.39             enable_dt  = enable_dta;                                   
+0020.40             write usrFMT;                                              
+0020.41             clear usr_ida;                                             
+0020.42             clear usr_nama;                                            
+0020.43             clear disable_da;                           
+0020.44             clear enable_dta;                           
+0020.45          adderrmsg = 'OK,the user added';               
+0020.46             *In06 = *off;                               
+0020.47          endif;                                         
+0020.48          endif;                                         
+0020.49     EndDo;                                              
+0020.50   EndSr;                                                
+0021.00  /end-free                                              
+0022.00  *-----------------------------------------------       
+0023.00  *  Update / Delete user if  exists//////////////       
+0024.00  *-----------------------------------------------       
+0025.00   BegSr $upd_proc;                                      
+0026.00     DoW *In03= *Off;                                    
+0027.00        exfmt updwin;                                    
+0028.00        clear upderrmsg ;                                
+0029.00         If *In12 = *on;                                 
+0029.01              clear fldupd;                              
+0029.02              clear usr_idu;                             
+0029.03              clear usr_namu;                            
+0029.04              clear disable_du;                                
+0029.05              clear enable_dtu;                                
+0034.00          Leave;                                               
+0034.01         Elseif (*In04 = *On AND FLDUPD <> ' ');               
+0034.02             usr_id     = usr_idu;                             
+0034.03             usr_nam    = usr_namu;                            
+0034.04             disable_dt = disable_du;                          
+0034.05             enable_dt  = enable_dtu;                          
+0034.06             update usrFMT;                                    
+0034.07             UPDERRMSG = 'The user updated!';                  
+0034.08             *In04 = *Off;                                     
+0034.09         Elseif (*In06 = *On AND FLDUPD <> ' ');               
+0034.10             usr_id     = usr_idu;                             
+0034.11             usr_nam    = usr_namu;                            
+0034.12             disable_dt = disable_du;                          
+0034.13             enable_dt  = enable_dtu;                          
+0034.14             delete usrFMT;                                    
+0034.15              clear usr_idu;                                   
+0034.16              clear usr_namu;                                  
+0034.17              clear disable_du;                                
+0034.18              clear enable_dtu;                               
+0034.19             UPDERRMSG = 'The user deleted!';                 
+0034.20             *In06 = *Off;                                    
+0034.21         Else;                                                
+0042.00           Chain fldupd   usr_disa;                           
+0043.00             If %Found(usr_disa);                             
+0048.01              usr_idu    = usr_id ;                           
+0048.02              usr_namu   = usr_nam ;                          
+0048.03              disable_du = disable_dt;                        
+0048.04              enable_dtu = enable_dt ;                        
+0048.05             else;                                            
+0048.06              clear usr_idu;                                  
+0048.07              clear usr_namu;                                 
+0048.08              clear disable_du;                               
+0048.09              clear enable_dtu;                               
+0048.10              upderrmsg = 'The user does not  exists';        
+0049.00        //    upderrmsg = 'Press F6 to UPD OR F4 to DEL';     
+0063.00             endif;                                           
+0064.00          endif;                                              
+0065.00     EndDo;                                                   
+0066.00   EndSr;                                                                      
+0067.00  /End-Free                                                                    
+        ****************** End of data ***********************

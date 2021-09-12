@@ -1,0 +1,119 @@
+*************** Beginning of data ******************
+0000.10      A*%%TS  SD  20210912  001850  ASAYED1     REL-V7R4M0  5770-WDS                    
+0000.20      A*%%EC                                                                            
+0000.30      A                                      DSPSIZ(24 80 *DS3)                         
+0000.40      A          R MMNU                                                                 
+0000.50      A*%%TS  SD  20210906  001840  ASAYED1     REL-V7R4M0  5770-WDS                    
+0000.60      A                                      CA03(03 'Exit')                            
+0000.70      A                                      CA12(12 'Cancel')                          
+0000.80      A                                  2 13'Disabled user tracking system'            
+0000.90      A                                      DSPATR(RI)                                 
+0001.00      A                                      DSPATR(BL)                                 
+0001.10      A                                      COLOR(WHT)                                 
+0001.20      A                                      DSPATR(CS)                                 
+0001.30      A                                  2 60DATE                                       
+0001.40      A                                      EDTCDE(Y)                                  
+0001.50      A                                  3 60TIME                                       
+0001.60      A                                  5 15'Welcome back : '                          
+0001.70      A                                  5 32USER                                       
+0001.80      A                                  8 16'Select your option, press ENTER'          
+0001.90      A                                      COLOR(BLU)                                 
+0002.00      A                                 11 18'1- User inquiry .'                                
+0002.10      A                                 12 18'2- Update/Delete user.'                           
+0002.20      A                                 13 18'3- Add new user .'                                
+0002.30      A                                 16 16'the option:'                                      
+0002.40      A                                      COLOR(BLU)                                         
+0002.50      A            OPT01          1S 0I 16 30COLOR(BLU)                                         
+0002.60      A                                 20 14'F3 = Exit'                                        
+0002.70      A            MNUERRMSG     30A  O 18 17COLOR(RED)                                         
+0002.80      A          R ADDWIN                                                                       
+0002.90      A*%%TS  SD  20210911  152045  ASAYED1     REL-V7R4M0  5770-WDS                            
+0003.00      A                                      WINDOW(4 15 15 43)                                 
+0003.10      A                                      CA12(12 'CANCEL')                                  
+0003.20      A                                      CA06(06 'ADD')                                     
+0003.30      A                                      CA05(05 'REFRESH')                                 
+0003.40      A                                      CA03(03 'EXIT')                                    
+0003.50      A                                      WDWBORDER((*CHAR '...|||.|'))                      
+0003.60      A                                  2  4'Add new disabled user :'                          
+0003.70      A                                      COLOR(WHT)                                         
+0003.80      A                                  4  3'User_ID.....:'                                    
+0003.90      A                                  6  3'User_name...:'                                    
+0004.00      A                                  8  3'Disable_date:'                             
+0004.10      A                                 10  3'Enable_date.:'                             
+0004.20      A                                 12 19'F12 = Cancel'                              
+0004.30      A                                      COLOR(BLU)                                  
+0004.40      A            ADDERRMSG     40A  O 14  2COLOR(RED)                                  
+0004.50      A            USR_IDA   R        B  4 17REFFLD(USRFMT/USR_ID ASAYED11/USR_D-        
+0004.60      A                                      ISA)                                        
+0004.70      A            USR_NAMA  R        B  6 17REFFLD(USRFMT/USR_NAM ASAYED11/USR_-        
+0004.80      A                                      DISA)                                       
+0004.90      A            DISABLE_DAR        B  8 17REFFLD(USRFMT/DISABLE_DT ASAYED11/U-        
+0005.00      A                                      SR_DISA)                                    
+0005.10      A            ENABLE_DTAR        B 10 17REFFLD(USRFMT/ENABLE_DT ASAYED11/US-        
+0005.20      A                                      R_DISA)                                     
+0005.30      A                                  8 31'(ddmmyy)'                                  
+0005.40      A                                      COLOR(YLW)                                  
+0005.50      A                                 10 31'(ddmmyy)'                                  
+0005.60      A                                      COLOR(YLW)                                  
+0005.70      A                                 12  3'F6 = Add'                                  
+0005.80      A                                      COLOR(BLU)                                  
+0005.90      A          R INQWIN                                                                
+0006.00      A*%%TS  SD  20210910  161749  ASAYED1     REL-V7R4M0  5770-WDS                      
+0006.10      A                                      CA12(12 'CANCEL')                            
+0006.20      A                                      CA03(03 'Exit')                              
+0006.30      A                                      WINDOW(4 15 15 43)                           
+0006.40      A                                      WDWBORDER((*CHAR '...|||.|'))                
+0006.50      A                                  2  4'Enter the User ID to serach'                
+0006.60      A                                      COLOR(WHT)                                   
+0006.70      A                                  4  3'User_ID.....:'                              
+0006.80      A                                  6  3'User_name...:'                              
+0006.90      A                                  8  3'Disable_date:'                              
+0007.00      A                                 10  3'Enable_date.:'                              
+0007.10      A                                 12 24'F12 = Cancel'                               
+0007.20      A                                      COLOR(BLU)                                   
+0007.30      A            INQERRMSG     40A  O 14  2COLOR(RED)                                   
+0007.40      A            USR_IDQ   R        O  4 17REFFLD(USRFMT/USR_ID ASAYED11/USR_D-         
+0007.50      A                                      ISA)                                         
+0007.60      A            DISABLE_DQR        O  8 17REFFLD(USRFMT/DISABLE_DT ASAYED11/U-         
+0007.70      A                                      SR_DISA)                                     
+0007.80      A            ENABLE_DTQR        O 10 17REFFLD(USRFMT/ENABLE_DT ASAYED11/US-         
+0007.90      A                                      R_DISA)                                      
+0008.00      A            USR_NAMQ  R        O  6 17REFFLD(USRFMT/USR_NAM ASAYED11/USR_-   
+0008.10      A                                      DISA)                                  
+0008.20      A                                 12  3'Enter = Search'                       
+0008.30      A                                      COLOR(BLU)                             
+0008.40      A            FLD002         4A  I  2 33                                       
+0008.50      A          R UPDWIN                                                           
+0008.60      A*%%TS  SD  20210912  001850  ASAYED1     REL-V7R4M0  5770-WDS                
+0008.70      A                                      CA03(03 'Exit')                        
+0008.80      A                                      CF04(04 'save')                        
+0008.90      A                                      CA05(05 'Refresh')                     
+0009.00      A                                      CA12(12 'Back')                        
+0009.10      A                                      CA06(06 'Delete')                      
+0009.20      A                                      WINDOW(4 15 15 43)                     
+0009.30      A                                      WDWBORDER((*CHAR '...|||.|'))          
+0009.40      A                                  2  4'Enter the User ID to UPD/DLT'         
+0009.50      A                                      COLOR(WHT)                             
+0009.60      A                                  4  3'User_ID.....:'                        
+0009.70      A                                  6  3'User_name...:'                        
+0009.80      A                                  8  3'Disable_date:'                        
+0009.90      A                                 10  3'Enable_date.:'                        
+0010.00      A                                 12 24'F12 = Cancel'                                 
+0010.10      A                                      COLOR(BLU)                                     
+0010.20      A            UPDERRMSG     40A  O 14  2COLOR(RED)                                     
+0010.30      A            USR_IDU   R        O  4 17REFFLD(USRFMT/USR_ID ASAYED11/USR_D-           
+0010.40      A                                      ISA)                                           
+0010.50      A            DISABLE_DUR        B  8 17REFFLD(USRFMT/DISABLE_DT ASAYED11/U-           
+0010.60      A                                      SR_DISA)                                       
+0010.70      A            ENABLE_DTUR        B 10 17REFFLD(USRFMT/ENABLE_DT ASAYED11/US-           
+0010.80      A                                      R_DISA)                                        
+0010.90      A            USR_NAMU  R        B  6 17REFFLD(USRFMT/USR_NAM ASAYED11/USR_-           
+0011.00      A                                      DISA)                                          
+0011.10      A                                 12  3'Enter = Search'                               
+0011.20      A                                      COLOR(BLU)                                     
+0011.30      A            FLDUPD         4A  B  2 36                                               
+0011.40      A                                 13  3'F4 = Update'                                  
+0011.50      A                                      COLOR(BLU)                                     
+0011.60      A                                 13 24'F6  = Delete'                                 
+0011.70      A                                      COLOR(BLU)                                     
+        ****************** End of data ******************************
